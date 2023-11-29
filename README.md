@@ -5,11 +5,11 @@ An UI library on top of Ant Design 5.x for building better UX in a more efficien
 ## Built-in Themes
 
 - vben1
-  - menu background color: <span class="color-sample" style="--color:#001529"></span>#001529
-  - menu item background color: <span class="color-sample" style="--color:#0c2135"></span>#0c2135
-  - menu item text color: <span class="color-sample" style="--color:#ffffffb3"></span>#ffffffb3
-  - menu item text color in hover state: <span class="color-sample" style="--color:#ffffff"></span>#ffffff
-  - selected menu item background color: <span class="color-sample" style="--color:#0960bd"></span>#0960bd
+  - menu background color: ![#001529](https://placehold.it/15/001529/001529) `#001529`
+  - menu item background color: ![#0c2135](https://placehold.it/15/0c2135/0c2135) `#0c2135`
+  - menu item text color: ![#ffffffb3](https://placehold.it/15/ffffffb3/ffffff) `#ffffffb3`
+  - menu item text color in hover state: ![#ffffff](https://placehold.it/15/ffffff/ffffff) `#ffffff`
+  - selected menu item background color: ![#0960bd](https://placehold.it/15/0960bd/0960bd)#0960bd
 
 ## References
 
