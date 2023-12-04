@@ -1,5 +1,5 @@
-import { ConfigProvider } from "antd";
-import { WorkspaceLayout } from "@meta-ultra/antd-plus";
+import { UltraLayout } from "@meta-ultra/antd-plus";
+import { ConfigProvider, theme } from "antd";
 
 const light = {
   components: {
@@ -10,6 +10,14 @@ const light = {
   },
 };
 
+const A = () => {
+  const f = ConfigProvider.useConfig();
+  const a = theme.useToken();
+  console.log(ConfigProvider.ConfigContext._currentValue.getPrefixCls());
+
+  return null;
+};
+
 const App = () => {
   const items = [
     { key: 1, label: "mxxxxxxxxxxx" },
@@ -17,8 +25,8 @@ const App = () => {
   ];
 
   return (
-    <ConfigProvider theme={light}>
-      <WorkspaceLayout navigatorItems={items} layout="side" />
+    <ConfigProvider theme={light} prefixCls="sdsoign">
+      <UltraLayout navigatorItems={items} layout="side" />
     </ConfigProvider>
   );
 };

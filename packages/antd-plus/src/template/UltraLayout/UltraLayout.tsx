@@ -1,16 +1,26 @@
 import { type FC, type ReactNode } from "react";
 import { Layout } from "antd";
-import { Navigator, type NavigatorProps } from "../../organism/Navigator";
+import { Nav, type NavProps } from "../../organism/Nav";
 import useStyles from "./useStyles";
 
-type WorkspaceLayoutProps = {
+type UltraLayoutProps = {
   logo?: ReactNode;
-  navigatorItems: NavigatorProps["items"];
+  navigatorItems: NavProps["items"];
   navigatorWidth?: number;
   layout?: "side" | "top" | "mix";
 };
 
-const Header = ({ logo, layout, items, logoWidth }) => {
+const Header = ({
+  logo,
+  layout,
+  items,
+  logoWidth,
+}: {
+  logo: ReactNode;
+  layout: UltraLayoutProps["layout"];
+  items: NavProps["items"];
+  logoWidth: number;
+}) => {
   const { styles, cx } = useStyles();
 
   return (
@@ -20,23 +30,33 @@ const Header = ({ logo, layout, items, logoWidth }) => {
           {logo}
         </div>
       ) : null}
-      {layout !== "side" ? <Navigator mode="horizontal" items={items} /> : null}
+      {layout !== "side" ? <Nav mode="horizontal" items={items} /> : null}
     </Layout.Header>
   );
 };
 
-const Sider = ({ logo, layout, items, width }) => {
-  const { styles, cx } = useStyles();
+const Sider = ({
+  logo,
+  layout,
+  items,
+  width,
+}: {
+  logo: ReactNode;
+  layout: UltraLayoutProps["layout"];
+  items: NavProps["items"];
+  width: number;
+}) => {
+  const { styles } = useStyles();
 
   return (
     <Layout.Sider className={styles.sider} width={width}>
       {layout === "side" ? <div className={styles.logo}>{logo}</div> : null}
-      <Navigator items={items} />
+      <Nav items={items} />
     </Layout.Sider>
   );
 };
 
-const WorkspaceLayout: FC<WorkspaceLayoutProps> = ({
+const UltraLayout: FC<UltraLayoutProps> = ({
   logo,
   navigatorItems,
   navigatorWidth = 200,
@@ -60,5 +80,5 @@ const WorkspaceLayout: FC<WorkspaceLayoutProps> = ({
   );
 };
 
-export type { WorkspaceLayoutProps };
-export default WorkspaceLayout;
+export type { UltraLayoutProps };
+export default UltraLayout;

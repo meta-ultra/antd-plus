@@ -1,8 +1,12 @@
-# Welcome to antd-plus
+# Welcome to `@meta-ultra/ antd-plus`
 
-An UI library on top of Ant Design 5.x for building better UX in a more efficient way.
+An UI library on top of Ant Design 5.x and linaria for building better UX in a more efficient way.
 
-## Built-in Themes
+## 🎠 Themes and Modes
+
+Ant Design has provided an mature theme editor <https://ant.design/theme-editor> to help us customize our own theme freely.
+
+### 🌈  Built-in Themes
 
 - vben1
   - menu background color: ![#001529](https://placehold.it/15/001529/001529) `#001529`
@@ -41,7 +45,9 @@ An UI library on top of Ant Design 5.x for building better UX in a more efficien
 - other primary color of soybean
   - ![#409EFF](https://placehold.it/15/409EFF/409EFF) `#409EFF`
 
-The implementation of gray mode is attaching class name below to html tag.
+### 🕶️ Built-in light and dark modes
+
+Besides light and dark modes, an out-of-box gray mode is supported by attaching class name below to html tag.
 
 ```css
 .html-gray {
@@ -49,7 +55,21 @@ The implementation of gray mode is attaching class name below to html tag.
 }
 ```
 
-## References
+## 🌵 Caveats
+
+- Since `linaria` is a compile time CSS-in-JS library, which is not allowed for dynamic class name, even though we can access the `prefixCls` set at ancestor `ConfigProvider` via `ConfigProvider.ConfigContext._currentValue.getPrefixCls()` or `ConfigProvider.ConfigContext._currentValue2.getPrefixCls()`. It's not possible to implement the feature as follows, and we have to assume the `prefixCls` is `antd` constantly. **PLEASE DO NOT SET THE `prefixCls` TO OTHER VALUE FOR ANY `ConfigProvider`.**
+  
+  ```js
+  const useStyles = createStyles(({css, prefixCls}) => ({
+    root: css/*css*/`
+      &.${prefixCls}-menu-root {
+        border-inline-end: 0 none !important;
+      }
+    `
+  }))
+  ```
+
+## 🧾 References
 
 - vben: <https://vben.vvbin.cn/>
 - soybean: <https://soybean.pro/#/dashboard/analysis>

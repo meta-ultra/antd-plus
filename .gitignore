@@ -93,6 +93,10 @@ out
 .nuxt
 dist
 
+# antd style build
+es
+lib
+
 # Gatsby files
 .cache/
 # Comment in the public line in if your project uses Gatsby and not Next.js

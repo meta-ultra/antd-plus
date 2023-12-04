@@ -1,4 +1,4 @@
-export { Navigator } from "./organism/Navigator"
-export type * from "./organism/Navigator"
-export { WorkspaceLayout } from "./template/WorkspaceLayout"
-export type * from "./template/WorkspaceLayout"
+export { Nav } from "./organism/Nav"
+export type * from "./organism/Nav"
+export { UltraLayout } from "./template/UltraLayout"
+export type * from "./template/UltraLayout"
