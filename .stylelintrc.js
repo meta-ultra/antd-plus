@@ -5,9 +5,8 @@ module.exports = {
     "stylelint-config-prettier",
     "stylelint-prettier/recommended",
   ],
-  plugins: ["stylelint-prettier", "@namics/stylelint-bem"],
+  plugins: ["stylelint-prettier"],
   rules: {
-    "plugin/stylelint-bem-namics": { namespaces: ["mu-"], patternPrefixes: [], helperPrefixes: [] },
     // Enable Prettier formatting rules
     "prettier/prettier": true,
     "selector-class-pattern": null,

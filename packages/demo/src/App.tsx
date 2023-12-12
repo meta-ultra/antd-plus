@@ -1,34 +1,19 @@
-import { UltraLayout } from "@meta-ultra/antd-plus";
-import { ConfigProvider, theme } from "antd";
+import { type FC } from 'react'
+import { ConfigProvider } from 'antd'
+import { UltraLayout, themeLight } from '@meta-ultra/antd-plus'
 
-const light = {
-  components: {
-    Layout: {
-      headerBg: "#fff",
-      siderBg: "#fff",
-    },
-  },
-};
-
-const A = () => {
-  const f = ConfigProvider.useConfig();
-  const a = theme.useToken();
-  console.log(ConfigProvider.ConfigContext._currentValue.getPrefixCls());
-
-  return null;
-};
-
-const App = () => {
-  const items = [
-    { key: 1, label: "mxxxxxxxxxxx" },
-    { key: 2, label: "m", children: [{ key: 3, label: "menu3" }] },
-  ];
-
+const App: FC = () => {
   return (
-    <ConfigProvider theme={light} prefixCls="sdsoign">
-      <UltraLayout navigatorItems={items} layout="side" />
+    <ConfigProvider theme={themeLight}>
+      <UltraLayout
+        layout="mixed"
+        logo={<div>123</div>}
+        nav={{
+          items: [{key: "a", label: "hihi"}]
+        }}
+      />
     </ConfigProvider>
-  );
-};
+  )
+}
 
-export default App;
+export default App

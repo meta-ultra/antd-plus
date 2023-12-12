@@ -57,7 +57,7 @@ Besides light and dark modes, an out-of-box gray mode is supported by attaching 
 
 ## 🌵 Caveats
 
-- Since `linaria` is a compile time CSS-in-JS library, which is not allowed for dynamic class name, even though we can access the `prefixCls` set at ancestor `ConfigProvider` via `ConfigProvider.ConfigContext._currentValue.getPrefixCls()` or `ConfigProvider.ConfigContext._currentValue2.getPrefixCls()`. It's not possible to implement the feature as follows, and we have to assume the `prefixCls` is `antd` constantly. **PLEASE DO NOT SET THE `prefixCls` TO OTHER VALUE FOR ANY `ConfigProvider`.**
+- Since `linaria` is a compile time CSS-in-JS library, which is not allowed for dynamic class name, while that is supported by runtime CSS-in-JS library such as antd-styles shown below:
   
   ```js
   const useStyles = createStyles(({css, prefixCls}) => ({
@@ -68,6 +68,13 @@ Besides light and dark modes, an out-of-box gray mode is supported by attaching 
     `
   }))
   ```
+
+  If you really need to rename the prefix of antd class names, there're two ways to achieve that:
+  1. Put the `@meta-ultra/antd-plus` components within a `ConfigProvider` whose `prefixCls` is `ant`;
+  2. Bundle your own `@meta-ultra/antd-plus` with a customized `prefixCls`.
+
+*Good to know*
+> we can access the `prefixCls` set at ancestor `ConfigProvider` via `ConfigProvider.ConfigContext._currentValue.getPrefixCls()` or `ConfigProvider.ConfigContext._currentValue2.getPrefixCls()`.
 
 ## 🧾 References
 

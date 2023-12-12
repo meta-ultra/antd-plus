@@ -5,10 +5,10 @@ import { css } from "@linaria/core";
 const rootClassName = css/*css*/ `
   user-select: none;
 
-  &.antd-menu-root {
+  &.process.env.prefixCls-menu-root {
     border-inline-end: 0 none !important;
   }
-  &.antd-menu-horizontal {
+  &.process.env.prefixCls-menu-horizontal {
     border-bottom: 0 none !important;
   }
 `;
