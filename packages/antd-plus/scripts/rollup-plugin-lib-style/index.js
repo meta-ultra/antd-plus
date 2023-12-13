@@ -29,6 +29,7 @@ const defaultLoaders = [
 
 const superReplaceMagicPath = (cssFileNames) => (fileContent) => {
   let match = SUPER_MAGIC_PATH_REGEX.exec(fileContent);
+  console.log(cssFileNames)
   while (match) {
      if (cssFileNames.indexOf(match[3].slice(0, -2)) !== -1) {
       fileContent = fileContent.replace(SUPER_MAGIC_PATH_REGEX, "$1./$3");
@@ -41,24 +42,6 @@ const superReplaceMagicPath = (cssFileNames) => (fileContent) => {
   }
 
   return fileContent
-  // if (match) {
-  //   console.log(match)
-  //   // console.log(cssFileNames, match[3].slice(0, -2), cssFileNames.indexOf(match[3].slice(0, -2)) !== -1)
-  //   if (cssFileNames.indexOf(match[3].slice(0, -2)) !== -1) {
-  //     return fileContent.replace(SUPER_MAGIC_PATH_REGEX, "$1./$3");
-  //   }
-  //   else {
-  //     return fileContent.replace(SUPER_MAGIC_PATH_REGEX, "");
-  //   }
-  //   // const currentPathDir = currentPath.split(path.sep).slice(1, -1).join("/");
-  //   // if (match[2] === currentPathDir) {
-  //   //   return fileContent.replace(SUPER_MAGIC_PATH_REGEX, "$1./$3");
-  //   // } else {
-  //   //   return fileContent.replace(SUPER_MAGIC_PATH_REGEX, "");
-  //   // }
-  // } else {
-  //   return fileContent.replace(SUPER_MAGIC_PATH_REGEX, "$1./$3");
-  // }
 };
 const replaceMagicPath = (fileContent) => fileContent.replace(MAGIC_PATH_REGEX, ".");
 
@@ -182,7 +165,8 @@ const libStylePlugin = (options = {}) => {
       // replace magic path with relative path
       await Promise.all(
         importersPaths.map((currentPath) => {
-          const cssFileNames = glob.globSync(`${path.dirname(currentPath).replace(/\\/g, "/")}/*.css`).map(cssPath => path.basename(cssPath))
+          console.log(currentPath);
+          const cssFileNames = glob.globSync(`${path.dirname(currentPath).replace(/\\/g, "/")}/${ currentPath === path.join("es", "index.js") ? "*" : "**/*"}.css`).map(cssPath => path.basename(cssPath))
 
           fs
             .readFile(currentPath)

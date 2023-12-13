@@ -1,5 +1,7 @@
 export { Nav } from "./organism/Nav"
 export type * from "./organism/Nav"
+export { Avatar } from "./organism/Avatar"
+export { ThemePanel } from "./organism/ThemePanel"
 export { UltraLayout } from "./template/UltraLayout"
 export type * from "./template/UltraLayout"
 export * from "./theme"

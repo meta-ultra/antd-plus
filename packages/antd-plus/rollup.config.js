@@ -26,6 +26,7 @@ module.exports = {
   plugins: [
     replace({
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development"),
+      "process.env.prefix": "antd-plus",
       "process.env.prefixCls": "ant",
       "process.env.navWidth": 200,
     }),

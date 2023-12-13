@@ -1,69 +1,36 @@
-import { type FC, type ReactNode } from "react";
-import { Layout } from "antd";
-import { type NavProps } from "../../organism/Nav";
+import { useState, cloneElement, type FC, type ReactElement } from "react";
+import { Layout, GlobalToken, theme } from "antd";
+import { AiOutlineMenuFold, AiOutlineMenuUnfold  } from "react-icons/ai";
+import useEvent from "react-use-event-hook";
+import { Nav, type NavProps } from "../../organism/Nav";
 import Header from "./Header";
 import Sider from "./Sider";
 import { css } from "@linaria/core"
+import { styled } from "@linaria/react"
 
 const rootClassName = css/*css*/ `
   height: 100vh;
 `
 
-// import useStyles from "./useStyles";
-
-
-// const Header = ({
-//   logo,
-//   layout,
-//   items,
-//   logoWidth,
-// }: {
-//   logo: ReactNode;
-//   layout: UltraLayoutProps["layout"];
-//   items: NavProps["items"];
-//   logoWidth: number;
-// }) => {
-//   const { styles, cx } = useStyles();
-
-//   return (
-//     <Layout.Header className={cx(styles.header, { "out-standard": layout !== "side" })}>
-//       {layout !== "side" ? (
-//         <div className={styles.logo} style={{ width: logoWidth }}>
-//           {logo}
-//         </div>
-//       ) : null}
-//       {layout !== "side" ? <Nav mode="horizontal" items={items} /> : null}
-//     </Layout.Header>
-//   );
-// };
-
-// const Sider = ({
-//   logo,
-//   layout,
-//   items,
-//   width,
-// }: {
-//   logo: ReactNode;
-//   layout: UltraLayoutProps["layout"];
-//   items: NavProps["items"];
-//   width: number;
-// }) => {
-//   const { styles } = useStyles();
-
-//   return (
-//     <Layout.Sider className={styles.sider} width={width}>
-//       {layout === "side" ? <div className={styles.logo}>{logo}</div> : null}
-//       <Nav items={items} />
-//     </Layout.Sider>
-//   );
-// };
+const Trigger = styled.div<{token: GlobalToken, size: number}>/*css*/ `
+  cursor: pointer;
+`
 
 type UltraLayoutProps = {
   logo?: {
-    collapsedLogo?: ReactNode;
-    expandedLogo?: ReactNode;
+    collapsedLogo?: ReactElement;
+    expandedLogo?: ReactElement;
   };
   layout?: "left" | "top" | "mixed";
+  trigger?: {
+    visible?: boolean;
+    size?: number;
+    unfoldIcon?: ReactElement;
+    foldIcon?: ReactElement;
+  };
+  header?: {
+    toolbar?: ReactElement;
+  };
   nav: {
     width?: number;
     items: NavProps["items"];
@@ -72,41 +39,63 @@ type UltraLayoutProps = {
 
 const UltraLayout: FC<UltraLayoutProps> = ({
   logo,
-  nav,
   layout = "left",
+  trigger,
+  header,
+  nav,
 }) => {
+  const collapsedLogo = logo && logo.collapsedLogo
+  const expandedLogo = logo && logo.expandedLogo
+  const triggerSize = trigger && trigger.size || 28;
+  const triggerUnfoldIcon = trigger && trigger.unfoldIcon || <AiOutlineMenuUnfold />;
+  const triggerFoldIcon = trigger && trigger.foldIcon || <AiOutlineMenuFold />;
   nav.width = (nav.width || process.env.navWidth) as number
 
-  const header = (
-    <Header logo={layout === "left" ? null : logo} outstand={layout !== "left"} />
+  const { token } = theme.useToken();
+
+  const [collapsed, setCollapsed] = useState(false)
+  const onTriggerClick = useEvent(() => {
+    setCollapsed(!collapsed)
+  })
+
+  const elTrigger = <Trigger token={token} size={triggerSize} onClick={onTriggerClick}>
+    {
+      cloneElement(collapsed ? triggerUnfoldIcon : triggerFoldIcon, {size: triggerSize, style: {fontSize: triggerSize}})
+    }
+  </Trigger>
+
+  const elHeader = (
+    <Header
+      logo={layout === "left" ? null : expandedLogo}
+      logoWidth={nav.width}
+      topmost={layout !== "left"}
+      trigger={layout === "mixed" ? elTrigger : undefined}
+      triggerSize={triggerSize}
+      nav={layout === "left" ? undefined : <Nav items={nav.items} mode="horizontal" />}
+      toolbar={header && header.toolbar}
+    >
+    </Header>
   );
-  const sider = <Sider logo={layout === "left" ? logo : null} items={nav.items} width={nav.width} />
+  const sider = (<Sider
+    expandedLogo={layout === "left" ? expandedLogo : undefined}
+    collapsedLogo={layout === "left" ? collapsedLogo : undefined}
+    trigger={layout === "left" ? elTrigger : undefined}
+    triggerSize={triggerSize}
+    collapsed={collapsed}
+    items={nav.items}
+    width={nav.width}
+  />)
 
   return (
     <Layout rootClassName={rootClassName}>
-      {layout === "left" ? sider : header}
+      {layout === "left" ? sider : elHeader}
       <Layout>
-         {layout === "left" ? header : layout === "top" ? null : sider}
-         <Layout.Content></Layout.Content>
+         {layout === "left" ? elHeader : layout === "top" ? null : sider}
+         <Layout.Content>123</Layout.Content>
       </Layout>
     </Layout>
   )
-  // const { styles } = useStyles();
-
-
-  // const sider = <Sider logo={logo} layout={layout} items={navigatorItems} width={navigatorWidth} />;
-
-  // return (
-  //   <Layout rootClassName={styles.root}>
-  //     {layout === "side" ? sider : header}
-  //     <Layout>
-  //       {layout === "side" ? header : layout === "top" ? null : sider}
-  //       <Layout.Content></Layout.Content>
-  //     </Layout>
-  //   </Layout>
-  // );
 };
-
 
 export type { UltraLayoutProps };
 export default UltraLayout;
